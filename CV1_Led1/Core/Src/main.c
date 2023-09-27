@@ -102,9 +102,8 @@ int main(void)
   /*---------------------------*/
 
   //uint8_t pole[32] = {1,0,1,0,1, 0, 0, 1,1,1,0,1,1,1,0,1,1,1, 0, 0, 1,0,1,0,1, 0,0,0,0,0,0,0 };
-  uint8_t i = 0;
-  uint8_t k = 0;
-  uint32_t sos = 0;
+
+  //uint32_t sos = 0;
 
   while (1)
   {
@@ -130,29 +129,24 @@ int main(void)
 	  }
 	  i++;
 		*/
-
-	  for (i=0; i<=31; i++) {
+	  uint32_t sos = 0;
+	  for (uint8_t i=0; i<=31; i++) {
 		  if (pole[i] == 1) {
 			  sos |= 1<<i;
 		  }
-		  else{
-			  i++;
-		  }
 	  }
 
-	  //i = 0;
-
-	  for (i=0; i<=31; i++) {
-		  k = sos&1; 		// vraci hodnotu
+	  for (uint8_t i=0; i<=31; i++) {
+		  uint8_t k = 0; 									// vraci hodnotu
+		  k = sos&1;
 		  if (k == 1){
 			  LL_GPIO_SetOutputPin(LD2_GPIO_Port, LD2_Pin);
-			  LL_mDelay(100);
 		  }
 		  else {
 			  LL_GPIO_ResetOutputPin(LD2_GPIO_Port, LD2_Pin);
-			  LL_mDelay(100);
 		  }
-		  sos = sos >> 1; 	// shift
+		  LL_mDelay(100);
+		  sos = sos >> 1; 									// shift
 	  }
 
 
