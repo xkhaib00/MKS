@@ -19,6 +19,10 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+#define LD2_GPIO_Port GPIOA
+#define LD2_Pin LL_GPIO_PIN_5
+
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -94,12 +98,77 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
+  /*---------------------------*/
+
+  //uint8_t pole[32] = {1,0,1,0,1, 0, 0, 1,1,1,0,1,1,1,0,1,1,1, 0, 0, 1,0,1,0,1, 0,0,0,0,0,0,0 };
+  uint8_t i = 0;
+  uint8_t k = 0;
+  uint32_t sos = 0;
+
   while (1)
   {
-    /* USER CODE END WHILE */
+	  uint8_t pole[32] = {1,0,1,0,1, 0, 0, 1,1,1,0,1,1,1,0,1,1,1, 0, 0, 1,0,1,0,1, 0,0,0,0,0,0,0 };
 
-    /* USER CODE BEGIN 3 */
+	  /*
+	  if (i == 27) {
+		  i = 0;
+	  }
+	  else
+
+	  k = pole[i];
+
+	  switch (k) {
+	  case 0:
+		  LL_GPIO_ResetOutputPin(LD2_GPIO_Port, LD2_Pin);
+		  LL_mDelay(100);
+		  break;
+	  case 1:
+		  LL_GPIO_SetOutputPin(LD2_GPIO_Port, LD2_Pin);
+		  LL_mDelay(100);
+		  break;
+	  }
+	  i++;
+		*/
+
+	  for (i=0; i<=31; i++) {
+		  if (pole[i] == 1) {
+			  sos |= 1<<i;
+		  }
+		  else{
+			  i++;
+		  }
+	  }
+
+	  //i = 0;
+
+	  for (i=0; i<=31; i++) {
+		  k = sos&1; 		// vraci hodnotu
+		  if (k == 1){
+			  LL_GPIO_SetOutputPin(LD2_GPIO_Port, LD2_Pin);
+			  LL_mDelay(100);
+		  }
+		  else {
+			  LL_GPIO_ResetOutputPin(LD2_GPIO_Port, LD2_Pin);
+			  LL_mDelay(100);
+		  }
+		  sos = sos >> 1; 	// shift
+	  }
+
+
+	  /*//LL_GPIO_SetOutputPin(LD2_GPIO_Port, LD2_Pin);
+	  GPIOA->BSRR = (1<<5); 								// set
+	  LL_mDelay(100);
+
+	  //LL_GPIO_ResetOutputPin(LD2_GPIO_Port, LD2_Pin);
+	  GPIOA->BRR = (1<<5); 									// reset
+	  LL_mDelay(100);
+	  */
+
   }
+
+  /*---------------------------*/
+
   /* USER CODE END 3 */
 }
 
