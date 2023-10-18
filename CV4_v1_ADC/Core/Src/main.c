@@ -70,7 +70,7 @@ static volatile uint32_t raw_volt;
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
 	static uint8_t channel;
-
+	//NEW
 	if (channel == 0) {
 		raw_pot = avg_pot >> ADC_Q;
 		avg_pot -= raw_pot;
