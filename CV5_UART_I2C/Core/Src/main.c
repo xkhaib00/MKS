@@ -73,6 +73,28 @@ static void uart_process_command(char *cmd)
 	if (strcmp(cmd, "HELLO") == 0){
 		printf("Vitame na PC MKS, kde se dozvite vsehno o mikrokontrolerech \n");
 	}
+	if (strcmp(cmd, "LED1") == 0){
+		HAL_GPIO_TogglePin(LED1_GPIO_Port,LED1_Pin);
+	}
+	if (strcmp(cmd, "LED2") == 0){
+		HAL_GPIO_TogglePin(LED2_GPIO_Port,LED2_Pin);
+	}
+	if (strcmp(cmd, "STATUS") == 0){
+		if (HAL_GPIO_ReadPin(LED1_GPIO_Port,LED1_Pin)){
+			printf("LED1: ON \n");
+		}
+		if (!HAL_GPIO_ReadPin(LED1_GPIO_Port,LED1_Pin)){
+			printf("LED1: OFF \n");
+		}
+		if (HAL_GPIO_ReadPin(LED2_GPIO_Port,LED2_Pin)){
+			printf("LED2: ON \n");
+		}
+		if (!HAL_GPIO_ReadPin(LED2_GPIO_Port,LED2_Pin)){
+			printf("LED2: OFF \n");
+		}
+
+	}
+
 
 }
 
@@ -138,13 +160,10 @@ int main(void)
   {
     /* USER CODE END WHILE */
 	  while (uart_rx_read_ptr != uart_rx_write_ptr) {
-	 	  uint8_t b = uart_rx_buf[uart_rx_read_ptr];
-	 	  if (++uart_rx_read_ptr >= RX_BUFFER_LEN) uart_rx_read_ptr = 0; // increase read pointer
-	 	  uart_byte_available(b); // process every received byte with the RX state machine
-	   }
-
-
-
+	 	 	  uint8_t b = uart_rx_buf[uart_rx_read_ptr];
+	 	 	  if (++uart_rx_read_ptr >= RX_BUFFER_LEN) uart_rx_read_ptr = 0; // increase read pointer
+	 	 	  uart_byte_available(b); // process every received byte with the RX state machine
+	 	   }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -254,9 +273,13 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, LED1_Pin|LD2_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
@@ -264,12 +287,19 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : LD2_Pin */
-  GPIO_InitStruct.Pin = LD2_Pin;
+  /*Configure GPIO pins : LED1_Pin LD2_Pin */
+  GPIO_InitStruct.Pin = LED1_Pin|LD2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : LED2_Pin */
+  GPIO_InitStruct.Pin = LED2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(LED2_GPIO_Port, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
