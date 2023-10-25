@@ -95,7 +95,7 @@ void tlacitka(void)
 
 	/*___________________Tlacitko_S1___________________*/
 
-	static uint32_t old_s1;
+	//static uint32_t old_s1;
 	uint32_t new_s1 = LL_GPIO_IsInputPinSet(S1_GPIO_Port, S1_Pin);
 	/*
 	if (old_s1 && !new_s1) {
