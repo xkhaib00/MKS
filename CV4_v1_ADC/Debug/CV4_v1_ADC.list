@@ -478,7 +478,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
  80003f8:	af00      	add	r7, sp, #0
  80003fa:	6078      	str	r0, [r7, #4]
 	static uint8_t channel;
-
+	//NEW
 	if (channel == 0) {
  80003fc:	4b23      	ldr	r3, [pc, #140]	; (800048c <HAL_ADC_ConvCpltCallback+0x98>)
  80003fe:	781b      	ldrb	r3, [r3, #0]
