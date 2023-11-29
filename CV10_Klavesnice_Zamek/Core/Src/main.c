@@ -119,7 +119,7 @@ int main(void)
 			  if (pos == sizeof(code)) {
 				  HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
 				  pos = 0;
-				  printf("Good! \n");
+				  printf("Good!" "\n");
 			  }
 		  } else {
 			  pos = 0;
