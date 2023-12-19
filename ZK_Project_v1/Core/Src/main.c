@@ -177,6 +177,7 @@ int main(void)
 
 	  HAL_Delay(SPEED);
 
+
 	  //baragrafShow();
 	  //baragrafUP();
 
