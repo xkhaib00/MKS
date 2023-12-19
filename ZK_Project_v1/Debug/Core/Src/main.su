@@ -1,0 +1,9 @@
+../Core/Src/main.c:78:6:baragrafShow	8	static
+../Core/Src/main.c:83:6:baragrafUP	8	static
+../Core/Src/main.c:100:6:HAL_ADC_ConvCpltCallback	16	static
+../Core/Src/main.c:128:5:main	16	static
+../Core/Src/main.c:193:6:SystemClock_Config	80	static
+../Core/Src/main.c:234:13:MX_ADC_Init	24	static
+../Core/Src/main.c:288:13:MX_USART2_UART_Init	8	static
+../Core/Src/main.c:323:13:MX_GPIO_Init	56	static
+../Core/Src/main.c:383:6:Error_Handler	8	static,ignoring_inline_asm
